@@ -1,0 +1,33 @@
+version: 1
+applications:
+  - appRoot: frontend
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm install
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        baseDirectory: build
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
+
+    backend:
+      phases:
+        build:
+          commands: []
+      artifacts:
+        baseDirectory: /
+        files:
+          - '**/*'
+
+    customHeaders:
+      - pattern: '**/*'
+        headers:
+          - key: Cache-Control
+            value: max-age=0,no-cache,no-store,must-revalidate
